@@ -12,8 +12,8 @@ let direcao = {
 function Pontuacao(numJogador, tabuleiro) {
 	let pontuacao = 0;
 	for (let i = 0; i < 8; i++) {
-		for (let i = 0; i < 8; i++) {
-			if (tabuleiro[i][j] == numJogador) pontuacao++;
+		for (let j = 0; j < 8; j++) {
+			if(tabuleiro[i][j] == numJogador) { pontuacao++; }
 		}
 	}
 	return pontuacao;
@@ -29,7 +29,6 @@ function PontuacaoComparada(numJogador, tabuleiro){
 }
 
 function checaJogadaValida(numJogador, tabuleiro) {
-
     let jogadasValidas = new Array();
 
     for(let i = 0; i < 8; i++) {
@@ -38,14 +37,13 @@ function checaJogadaValida(numJogador, tabuleiro) {
                 for(let k = 0; k < 8; k++) {
                     let jogadaValida = encontraQuadradoValido(i, j, direcao[k], numJogador, tabuleiro);
                     if(jogadaValida != null && !(jogadasValidas.includes(jogadaValida))) {
-                        jogadasValidas.concat(jogadaValida);
+                        jogadasValidas.push(jogadaValida);
                     }
                 }
             }
         }
     }
 
-    console.log(jogadasValidas)
     return jogadasValidas;
 
 }
@@ -53,6 +51,8 @@ function checaJogadaValida(numJogador, tabuleiro) {
 function encontraQuadradoValido(i, j, direcao, numJogador, tabuleiro) {
 
     let passouDeOponente = false;
+    i += direcao[0];
+    j += direcao[1];
     while(i >= 0 && i < 8 && j >= 0 && j < 8) {
         switch(tabuleiro[i][j]) {
             case 0:
@@ -78,12 +78,14 @@ function trocaQuadrados(i, j, numJogador, tabuleiro) {
             trocaPecas(i, j, direcao[k], numJogador, tabuleiro);
         }
     }
+    return tabuleiro;
 }
 
 function direcaoTemTroca(i, j, direcao, numJogador, tabuleiro) {
 
     let passouDeOponente = false;
-
+    i += direcao[0];
+    j += direcao[1];
     while(i >= 0 && i < 8 && j >= 0 && j < 8) {
         switch(tabuleiro[i][j]) {
             case 0: return false;
@@ -107,8 +109,8 @@ function trocaPecas(i, j, direcao, numJogador, tabuleiro) {
 
     while (tabuleiro[i][j] !== numJogador){
 		tabuleiro[i][j] = numJogador;
+        atribuiCor(`inR${i}C${j}`, numJogador);
         i += direcao[0];
         j += direcao[1];
     }
-
 }

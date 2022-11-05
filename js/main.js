@@ -4,17 +4,24 @@ window.onload = function() {
 
 }
 
+let playerNumber = 2;
+let computerNumber = 1;
+
+let playerTurn = true;
+
+const TABULEIRO = [new Array()];
+let jogadasValidas = [];
+
 function criaTabuleiro() {
 
-    const tabuleiro = [new Array()];
     for(let i = 0; i < 8; i++) {
-        tabuleiro[i] = [0, 0, 0, 0, 0, 0, 0, 0];
+        TABULEIRO[i] = [0, 0, 0, 0, 0, 0, 0, 0];
     }
 
-    tabuleiro[3][3] = 1
-    tabuleiro[3][4] = 2
-    tabuleiro[4][4] = 1
-    tabuleiro[4][3] = 2
+    TABULEIRO[3][3] = 1
+    TABULEIRO[3][4] = 2
+    TABULEIRO[4][4] = 1
+    TABULEIRO[4][3] = 2
 
     criaQuadrado();
 
@@ -23,7 +30,7 @@ function criaTabuleiro() {
     atribuiCor('inR4C4', 1);
     atribuiCor('inR4C3', 2);
 
-    mostraJogadasValidas(1, tabuleiro);
+    entregaJogadasValidas(2, TABULEIRO);
 
 }
 
@@ -40,6 +47,7 @@ function criaQuadrado() {
             peca.className = 'peca';
             peca.style.display = 'none';
             document.getElementById(`R${i}C${j}`).appendChild(peca);
+            peca.addEventListener('click', function () { colocaPeca(i, j, playerNumber); }  );
         }
     }
 
@@ -59,9 +67,9 @@ function atribuiCor(id, numJogador) {
     peca.style.backgroundColor = 'transparent';
 }
 
-function mostraJogadasValidas(numJogador, tabuleiro) {
+function entregaJogadasValidas(numJogador, tabuleiro) {
 
-    let jogadasValidas = checaJogadaValida(numJogador, tabuleiro);
+    jogadasValidas = checaJogadaValida(numJogador, tabuleiro);
 
     jogadasValidas.forEach(e => {
 
@@ -70,3 +78,53 @@ function mostraJogadasValidas(numJogador, tabuleiro) {
     });
 
 }
+
+/* 
+*  params: coordenadas da peca jogada 
+*  return: void
+*  coloca a nova peca no tabuleiro
+*  atualiza as novas possibilidades de jogadas 
+*/
+function colocaPeca(i, j, numJogador) {
+
+    jogadasValidas.forEach(e => {
+        if(e[0] == i && e[1] == j) {
+            jogadasValidas.forEach(e => {
+                let peca = document.getElementById(`inR${e[0]}C${e[1]}`);
+                peca.style.display = 'none';
+            });
+            atribuiCor(`inR${i}C${j}`, numJogador);
+            trocaQuadrados(i, j, numJogador, TABULEIRO);
+        }
+    });
+
+    aiPlay();
+
+    entregaJogadasValidas(playerNumber, TABULEIRO);
+
+}
+
+function aiPlay() {
+
+    let tabuleiro = [];
+    tabuleiro = Object.assign(TABULEIRO, tabuleiro);
+    
+    let jogadaAI = miniMax(computerNumber, tabuleiro);
+
+    jogadasValidas.forEach(e => {
+        if(e[0] == jogadaAI[0] && e[1] == jogadaAI[1]) {
+            jogadasValidas.forEach(e => {
+                let peca = document.getElementById(`inR${e[0]}C${e[1]}`);
+                peca.style.display = 'none';
+            });
+            atribuiCor(`inR${i}C${j}`, numJogador);
+            trocaQuadrados(i, j, numJogador, TABULEIRO);
+        }
+    });
+
+    entregaJogadasValidas(playerNumber, TABULEIRO);
+
+}
+
+
+

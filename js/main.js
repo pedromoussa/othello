@@ -9,6 +9,7 @@ let playerNumber = 2;
 let computerNumber = 1;
 
 let outOfMoves = 0;
+let playerTurn = true;
 
 let TABULEIRO = new Array();
 let jogadasValidas = [];
@@ -75,6 +76,7 @@ function entregaJogadasValidas(numJogador, tabuleiro) {
         if(outOfMoves == 2) {
             showScoreboard();
         } else { 
+			playerTurn = false;
             aiPlay();
         }
     } else { 
@@ -105,6 +107,7 @@ function colocaPeca(i, j, numJogador) {
             outOfMoves = 0;
             atribuiCor(`inR${i}C${j}`, numJogador);
             trocaQuadrados(i, j, numJogador, TABULEIRO, false);
+			playerTurn = false;
             aiPlay();
         }
     });
@@ -114,20 +117,23 @@ function colocaPeca(i, j, numJogador) {
 function aiPlay() {
 	
 	setTimeout(() => {
-		let tabuleiro = new Array();
-		copiaTabuleiro(TABULEIRO, tabuleiro);
-		let jogadaAI = miniMax(computerNumber, tabuleiro);
-        if(jogadaAI !== null) {
-            outOfMoves = 0;
-            atribuiCor(`inR${jogadaAI[0]}C${jogadaAI[1]}`, computerNumber);
-            trocaQuadrados(jogadaAI[0], jogadaAI[1], computerNumber, TABULEIRO, false);
-        } else {
-            outOfMoves++;
-            if(outOfMoves == 2) {
-                showScoreboard();
-            }
-        }
-        entregaJogadasValidas(playerNumber, TABULEIRO);
+		if (playerTurn == false){
+			playerTurn = true;
+			let tabuleiro = new Array();
+			copiaTabuleiro(TABULEIRO, tabuleiro);
+			let jogadaAI = miniMax(computerNumber, tabuleiro);
+			if(jogadaAI !== null) {
+				outOfMoves = 0;
+				atribuiCor(`inR${jogadaAI[0]}C${jogadaAI[1]}`, computerNumber);
+				trocaQuadrados(jogadaAI[0], jogadaAI[1], computerNumber, TABULEIRO, false);
+			} else {
+				outOfMoves++;
+				if(outOfMoves == 2) {
+					showScoreboard();
+				}
+			}
+			entregaJogadasValidas(playerNumber, TABULEIRO);
+		}
 	}, 1000)
 
 }
@@ -182,6 +188,7 @@ function pickColour() {
         computerNumber = 2;
         buttonB.style.display = 'none';
         buttonW.style.display = 'none';
+		playerTurn = false;
         aiPlay();
     }
 

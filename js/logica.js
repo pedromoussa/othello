@@ -36,7 +36,7 @@ function checaJogadaValida(numJogador, tabuleiro) {
             if(tabuleiro[i][j] == numJogador) {
                 for(let k = 0; k < 8; k++) {
                     let jogadaValida = encontraQuadradoValido(i, j, direcao[k], numJogador, tabuleiro);
-                    if(jogadaValida != null && !(jogadasValidas.includes(jogadaValida))) {
+                    if(jogadaValida != null && !(inclui(jogadaValida[0], jogadaValida[1], jogadasValidas))) {
                         jogadasValidas.push(jogadaValida);
                     }
                 }
@@ -119,4 +119,12 @@ function trocaPecas(i, j, direcao, numJogador, tabuleiroTemp, isTest) {
         i += direcao[0];
         j += direcao[1];
     }
+}
+
+function inclui(i, j, jogada) {
+    jogada.forEach(e => {
+        if(e[0] == i && e[1] == j) {
+            return true;
+        }
+    });
 }

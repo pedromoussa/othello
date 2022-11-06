@@ -74,15 +74,18 @@ function entregaJogadasValidas(numJogador, tabuleiro) {
         outOfMoves++;
         if(outOfMoves == 2) {
             showScoreboard();
+        } else { 
+            aiPlay();
         }
-        aiPlay();
+    } else { 
+
+        jogadasValidas.forEach(e => {
+
+            atribuiCor(`inR${e[0]}C${e[1]}`, 0);
+            
+        });
+
     }
-
-    jogadasValidas.forEach(e => {
-
-        atribuiCor(`inR${e[0]}C${e[1]}`, 0);
-        
-    });
 
 }
 

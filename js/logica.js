@@ -49,6 +49,9 @@ function checaJogadaValida(numJogador, tabuleiro) {
 }
 
 function encontraQuadradoValido(i, j, direcao, numJogador, tabuleiro) {
+	let numOponente;
+	if(numJogador == 1){ numOponente = 2; }
+	else { numOponente = 1; }
 
     let passouDeOponente = false;
     i += direcao[0];
@@ -62,7 +65,7 @@ function encontraQuadradoValido(i, j, direcao, numJogador, tabuleiro) {
                     return null;
                 }
             case numJogador: return null;
-            default: passouDeOponente = true;
+            case numOponente: passouDeOponente = true;
         }
         i += direcao[0];
         j += direcao[1];
@@ -72,29 +75,31 @@ function encontraQuadradoValido(i, j, direcao, numJogador, tabuleiro) {
 
 }
 
-function trocaQuadrados(i, j, numJogador, tabuleiro) {
+function trocaQuadrados(i, j, numJogador, tabuleiroTemp, isTest) {
     for(let k = 0; k < 8; k++) {
-        if(direcaoTemTroca(i, j, direcao[k], numJogador, tabuleiro)) {
-            trocaPecas(i, j, direcao[k], numJogador, tabuleiro);
+        if(direcaoTemTroca(i, j, direcao[k], numJogador, tabuleiroTemp,isTest)) {
+            trocaPecas(i, j, direcao[k], numJogador, tabuleiroTemp, isTest);
         }
     }
-    return tabuleiro;
 }
 
-function direcaoTemTroca(i, j, direcao, numJogador, tabuleiro) {
+function direcaoTemTroca(i, j, direcao, numJogador, tabuleiroTemp, isTest) {
+	let numOponente;
+	if(numJogador == 1){ numOponente = 2; }
+	else { numOponente = 1; }
 
     let passouDeOponente = false;
     i += direcao[0];
     j += direcao[1];
     while(i >= 0 && i < 8 && j >= 0 && j < 8) {
-        switch(tabuleiro[i][j]) {
+        switch(tabuleiroTemp[i][j]) {
             case 0: return false;
             case numJogador:
                 if(passouDeOponente == true) {
                     return true;
                 }
                 return false;
-            default: passouDeOponente = true;
+            case numOponente: passouDeOponente = true;
         }
         i += direcao[0];
         j += direcao[1];
@@ -102,14 +107,15 @@ function direcaoTemTroca(i, j, direcao, numJogador, tabuleiro) {
 
 }
 
-function trocaPecas(i, j, direcao, numJogador, tabuleiro) {
-
+function trocaPecas(i, j, direcao, numJogador, tabuleiroTemp, isTest) {
+	
+	tabuleiroTemp[i][j] = numJogador;
     i += direcao[0];
     j += direcao[1];
 
-    while (tabuleiro[i][j] !== numJogador){
-		tabuleiro[i][j] = numJogador;
-        atribuiCor(`inR${i}C${j}`, numJogador);
+    while (tabuleiroTemp[i][j] != numJogador){
+		tabuleiroTemp[i][j] = numJogador;
+        if (!isTest) { atribuiCor(`inR${i}C${j}`, numJogador); }
         i += direcao[0];
         j += direcao[1];
     }

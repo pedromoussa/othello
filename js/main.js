@@ -70,22 +70,11 @@ function entregaJogadasValidas(numJogador, tabuleiro) {
 
     jogadasValidas = checaJogadaValida(numJogador, tabuleiro);
 
-    if(jogadasValidas.length == 0) {
-        outOfMoves++;
-        if(outOfMoves == 2) {
-            showScoreboard();
-        } else { 
-            aiPlay();
-        }
-    } else { 
+    jogadasValidas.forEach(e => {
 
-        jogadasValidas.forEach(e => {
-
-            atribuiCor(`inR${e[0]}C${e[1]}`, 0);
+        atribuiCor(`inR${e[0]}C${e[1]}`, 0);
             
-        });
-
-    }
+    });
 
 }
 
@@ -96,6 +85,15 @@ function entregaJogadasValidas(numJogador, tabuleiro) {
 *  atualiza as novas possibilidades de jogadas 
 */
 function colocaPeca(i, j, numJogador) {
+
+    if(jogadasValidas.length == 0) {
+        outOfMoves++;
+        if(outOfMoves == 2) {
+            showScoreboard();
+        } 
+        aiPlay();
+    }
+
     jogadasValidas.forEach(e => {
         if(e[0] == i && e[1] == j) {
             jogadasValidas.forEach(e => {

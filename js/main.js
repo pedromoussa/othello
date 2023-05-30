@@ -166,7 +166,7 @@ function showScoreboard() {
 }
 
 function pickColour() {
-
+    
     const text = document.createElement('p');
     text.className = 'texto';
     document.body.appendChild(text);

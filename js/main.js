@@ -169,20 +169,28 @@ function showScoreboard() {
 
 function pickColour() {
     
+    const colors = document.createElement('div');
+    colors.className = 'color-picker';
+    document.getElementsByTagName('body')[0].appendChild(colors);
+
     const text = document.createElement('p');
     text.className = 'texto';
-    document.body.appendChild(text);
+    document.getElementsByClassName('color-picker')[0].appendChild(text);
 
     text.innerText = `Escolha sua cor: `;
+
+    const buttons = document.createElement('div');
+    buttons.className = 'buttons';
+    document.getElementsByClassName('color-picker')[0].appendChild(buttons);
 
     const buttonB = document.createElement('button');
     const buttonW = document.createElement('button');
 
     buttonB.className = 'botaoB';
-    document.body.appendChild(buttonB);
+    document.getElementsByClassName('buttons')[0].appendChild(buttonB);
 
     buttonW.className = 'botaoW';
-    document.body.appendChild(buttonW);
+    document.getElementsByClassName('buttons')[0].appendChild(buttonW);
 
     buttonB.onclick = function() {
         playerNumber = 2;

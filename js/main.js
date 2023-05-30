@@ -76,7 +76,7 @@ function entregaJogadasValidas(numJogador, tabuleiro) {
         if(outOfMoves == 2) {
             showScoreboard();
         } else { 
-			playerTurn = false;
+    		playerTurn = false;
             aiPlay();
         }
     } else { 
@@ -85,7 +85,9 @@ function entregaJogadasValidas(numJogador, tabuleiro) {
 
         atribuiCor(`inR${e[0]}C${e[1]}`, 0);
             
-    });
+        });
+        
+    }
 
 }
 

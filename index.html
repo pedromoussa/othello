@@ -6,22 +6,62 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Othello</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
     </head>
 
     <body>
 
-        <center>
-            <div class="canvas" width="560" height="560" style="width: 560px; height: 560px">
-                
-            </div>
-        </center>
+        <div class="container">
+            <button class="go-to-rules" onclick="window.location.href='#rules'">Como Jogar</button>
+        </div>
 
+        <div class="outer-div">
+
+            <div class="canvas" width="560" height="560" style="width: 560px; height: 560px"></div>
+
+        </div>
+
+        <section id="rules">
+            <h2>Como Jogar</h2>
+          
+            <p class="rule-paragraph">
+              Othello é um jogo de estratégia para dois jogadores, jogado num tabuleiro 8x8. 
+              A partida começa com quatro peças colocadas no centro do tabuleiro. As Pretas 
+              fazem a primeira jogada.
+            </p>
+            <br>
+            <p class="rule-paragraph">
+              O jogador com as Pretas precisa jogar sua peça no tabuleiro de forma em que haja pelo menos 
+              uma ou mais peças Brancas contíguas na linha (horizontal, vertical ou diagonal) formada 
+              entre a peça colocada e outra peça preta do tabuleiro.
+            </p>
+            <br>          
+            <p class="rule-paragraph">
+              Depois de colocar a peça, o jogador com as Pretas vira todas as peças Brancas 
+              existentes na linha reta entre a nova peça e quaisquer peças pretas existentes. 
+              Todas as peças viradas agora são Pretas.
+            </p>
+            <br>
+            <p class="rule-paragraph">
+              Os jogadores alternam a vez. Se um jogador não tem uma jogada válida, passa a vez 
+              para o adversário. Quando nenhum dos dois tiver uma jogada válida, o jogo termina. 
+              Uma partida de Othello pode terminar antes do tabuleiro estar com todas as casas do 
+              tabuleiro ocupadas.
+            </p>
+            <br>
+            <p class="rule-paragraph">
+              O jogador com mais peças no tabuleiro ao final do jogo vence. Se ambos tiverem a mesma 
+              quantidade de peças, há empate.
+            </p>
+          </section>
+        
         <script src="./js/main.js"></script>
         <script src="./js/logica.js"></script>
         <script src="./js/minimax.js"></script>
-
-
+        
     </body>
 
 </html>
